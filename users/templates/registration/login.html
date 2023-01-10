@@ -1,0 +1,21 @@
+{% extends "workout_logs/base.html" %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  <!--Sets the login page-->  
+  <form method="post" action="{% url 'users:login' %}">
+    {% csrf_token %}
+    <!--display form for logging in -->
+    {{ form.as_p }}
+    
+    <button name="submit">Log in</button>
+    <!--Send user back to home page if logged in-->
+    <input type="hidden" name="next" 
+      value="{% url 'workout_logs:index' %}" />
+  </form>
+    
+{% endblock content %}

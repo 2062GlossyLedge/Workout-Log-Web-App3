@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     #My apps
     'workout_logs',
+    'users',
 
     #Default apps
     'django.contrib.admin',

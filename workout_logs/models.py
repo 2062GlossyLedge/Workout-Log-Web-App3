@@ -12,8 +12,9 @@ class  Workout(models.Model):
 
 class Entry(models.Model):
     """The workout name along with the weight and sets/reps done."""
-    Workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
-    text = models.TextField()
+    #This is a foreign key (ID) instance that connects each entry to its workout key. 
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
+    text = models.TextField()#null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -27,4 +28,4 @@ class Entry(models.Model):
         else:
             return self.text
 
-            #change
+       

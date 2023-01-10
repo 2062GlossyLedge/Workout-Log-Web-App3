@@ -1,0 +1,17 @@
+{% extends "workout_logs/base.html" %}
+
+{% block content %}
+
+<!--Show workout category with a link to the main page for that workout-->
+<p><a href="{url 'workout_logs:workout' workout.id %}">{{workout}}</a></p>
+
+  <p>Edit entry:</p>
+
+  <!--use workout id to show entry with the correct workout category-->
+  <form action="{% url 'workout_logs:edit_entry' entry.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Save changes</button>
+  </form>
+    
+{% endblock content %}

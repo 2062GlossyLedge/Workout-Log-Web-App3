@@ -21,6 +21,9 @@ from django.urls import path, include
 urlpatterns = [
     #"defines all URLs that can be requested from the admin site" (pg.395)
     path('admin/', admin.site.urls),
+    #sets up urls that will be written for the users app
+    path('users/', include('users.urls')),
     #include urls in workout_logs folder 
     path('', include('workout_logs.urls')),
+    
 ]

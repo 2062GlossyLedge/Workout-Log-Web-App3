@@ -6,11 +6,22 @@
 
   <!--A bullet list of entries for each workout category -->
   <p>Entries:</p>
+
+  <!--Provides a link to the new_entry page from each workout page-->
+  <p>
+    <a href="{% url 'workout_logs:new_entry' workout.id %}">Add new entry</a>
+  </p>
   <ul>
   {% for entry in entries %}
     <li>
       <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
       <p>{{ entry.text|linebreaks }}</p>
+      <!--Display link to edit entry after each entry-->
+      
+      <p>
+       # <a href="{% url 'workout_logs:edit_entry' entry.id %}">Edit entry</a>
+      </p>
+      
     </li>
     <!--Show if there are no entries for a workout category-->
   {% empty %}
