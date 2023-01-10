@@ -1,0 +1,8 @@
+<!--All html files inherit from this file-->
+<p>
+    <a href="{% url 'workout_logs:index' %}">Workout Log</a> -
+    <a href="{% url 'workout_logs:workouts' %}">Workouts</a>
+</p>
+
+<!--Use blocks to allow child files to make their own additions-->
+{% block content %}{% endblock content %}

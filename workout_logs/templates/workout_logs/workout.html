@@ -1,0 +1,23 @@
+{% extends 'workout_logs/base.html' %}
+
+{% block content %}
+
+  <p>Workout: {{ workout}}</p>
+
+  <!--A bullet list of entries for each workout category -->
+  <p>Entries:</p>
+  <ul>
+  {% for entry in entries %}
+    <li>
+      <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+      <p>{{ entry.text|linebreaks }}</p>
+    </li>
+    <!--Show if there are no entries for a workout category-->
+  {% empty %}
+    <li>
+      There are no entries for this topic yet.
+    </li>
+  {% endfor %}
+  </ul>
+
+{% endblock content %}

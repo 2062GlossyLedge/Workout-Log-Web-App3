@@ -1,0 +1,12 @@
+{% extends "workout_logs/base.html" %}
+
+{% block content %}
+  <p>Add a new workout:</p>
+
+  <form action="{% url 'workout_logs:new_workout' %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">add workout</button>
+  </form>
+    
+{% endblock content %}
