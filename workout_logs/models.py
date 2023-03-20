@@ -1,10 +1,13 @@
 #This model tells Django how to work with the data on the Workouts and its entries
 from django.db import models
+from django.contrib.auth.models import User #authentication system 
 
 class  Workout(models.Model):
     """A Workout the user is focusing on."""
     text = models.CharField(max_length=200)
-    date_added = models.DateTimeField(auto_now_add=True) 
+    date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE) #established a relationship between user and and model using a foreign key, 
+    #such that the user's topics would be deleted if the user was deleted
 
     def __str__(self):
         """Return a string representation of the model."""
