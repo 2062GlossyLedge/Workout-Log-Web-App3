@@ -6,6 +6,7 @@ from .forms import WorkoutForm, EntryForm
 # from django.http import HttpResponseRedirect, Http404
 # from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 # Create your views here.
 def index(request):
@@ -15,14 +16,19 @@ def index(request):
 @login_required #checks if user is logged in before running workouts()
 def workouts(request):
     """Show all workouts."""
-    workouts = Workout.objects.order_by('date_added')
+    workouts = Workout.objects.filter(owner=request.user).order_by('date_added') #only shoew workouts from database that belong to current user
+    #workouts = Workout.objects.order_by('date_added')
     context = {'workouts': workouts}
+    
     return render(request, 'workout_logs/workouts.html', context)
 
 @login_required
 def workout(request, workout_id):
     """Show a single workout, and all its entries."""
     workout = Workout.objects.get(id=workout_id)#, null=True)
+     # Make sure the topic belongs to the current user.
+    if workout.owner != request.user:
+        raise Http404
     entries = workout.entry_set.order_by('-date_added')
     context = {'workout': workout, 'entries': entries}
     return render(request, 'workout_logs/workout.html', context)
@@ -38,13 +44,15 @@ def new_workout(request):
         # POST data submitted; process data.
         form = WorkoutForm(request.POST)
         if form.is_valid(): 
-            form.save()
-            #new_workout = form.save(commit=False)
-            #new_workout.owner = request.user
+            #each user can add workouts tied to them
+            new_workout = form.save(commit=False) #modifies new workout before commitng  to database
+            new_workout.owner = request.user
+            new_workout.save()
             #return user back to view of all workouts after making their workout entry 
             return redirect('workout_logs:workouts')
             #return HttpResponseRedirect(reverse('workout_logs:workouts'))
-    #create a context dictionary and render page for a blank form or an invalid form     context = {'form': form}
+    #create a context dictionary and render page for a blank form or an invalid form     
+    context = {'form': form}
     return render(request, 'workout_logs/new_workout.html', context)
 
 @login_required
@@ -81,8 +89,8 @@ def edit_entry(request, entry_id):
     #retrieve entry_id from database 
     entry = Entry.objects.get(id=entry_id)
     workout = entry.workout
-    # if workout.owner != request.user:
-    #     raise Http404
+    if workout.owner != request.user:
+         raise Http404
     
     if request.method != 'POST':
         # Initial request; pre-fill form with the current entry.
