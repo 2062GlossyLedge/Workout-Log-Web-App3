@@ -1,5 +1,9 @@
 {% extends 'workout_logs/base.html' %}
 
+{% block page_header %}
+  <h3>{{ workout }}</h3>
+{% endblock page_header %}
+
 {% block content %}
 
   <p>Workout: {{ workout}}</p>
@@ -13,21 +17,21 @@
   </p>
   <ul>
   {% for entry in entries %}
-    <li>
-      <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-      <p>{{ entry.text|linebreaks }}</p>
-      <!--Display link to edit entry after each entry-->
-      
-      <p>
-       # <a href="{% url 'workout_logs:edit_entry' entry.id %}">Edit entry</a>
-      </p>
-      
-    </li>
+  <div class="card mb-3">
+    <h4 class="card-header">
+      {{ entry.date_added|date:'M d, Y H:i' }}
+      <small><a href="{% url 'workout_logs:edit_entry' entry.id %}">
+          edit entry</a></small>
+    </h4>
+    <div class="card-body">
+      {{ entry.text|linebreaks }}
+    </div>
+  </div>
     <!--Show if there are no entries for a workout category-->
   {% empty %}
-    <li>
-      There are no entries for this topic yet.
-    </li>
+    
+     <p> There are no entries for this workout yet.</p>
+    
   {% endfor %}
   </ul>
 

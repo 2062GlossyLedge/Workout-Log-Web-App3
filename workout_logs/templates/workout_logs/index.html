@@ -1,8 +1,13 @@
 {% extends "workout_logs/base.html" %}
 
-{% block content %}
 
+{% block page_header %}
+  <div class="jumbotron">
+    <h1 class="display-3">Track your workouts.</h1>
 
-<p>Workout Log helps you keep track of your workouts, and the workouts are categorized by the type of workout you are doing </p>
+    <p>Workout Log helps you keep track of your workouts, and the workouts are categorized by the type of workout you are doing </p>
 
-{% endblock content %}
+    <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+        role="button">Register &raquo;</a>
+  </div>
+{% endblock page_header %}

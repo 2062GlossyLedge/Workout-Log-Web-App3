@@ -36,6 +36,9 @@ INSTALLED_APPS = [
     'workout_logs',
     'users',
 
+    #Third part apps
+    'bootstrap4' ,
+
     #Default apps
     'django.contrib.admin',
     'django.contrib.auth',

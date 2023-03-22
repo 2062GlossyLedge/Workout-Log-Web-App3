@@ -1,5 +1,9 @@
 {% extends "workout_logs/base.html" %}
 
+{% block page_header %}
+  <h1>Workouts</h1>
+{% endblock page_header %}
+
 {% block content %}
 
   <p>Workout Categories</p>
@@ -7,15 +11,15 @@
   <!--Create a bullet list of workouts (ex: arms, legs)-->
   <ul>
     {% for workout in workouts %}
-    <li>
+    <li><h3>
         <a href="{% url 'workout_logs:workout' workout.id %}">{{ workout }}</a>
-	  </li>
+      </h3></li>
       <!--Show if no workouts were added -->
     {% empty %}
-      <li>No workouts have been added yet.</li>
+      <li><h3> workouts have been added yet.</h3></li>
     {% endfor %}
   </ul>
 
-  <a href="{% url 'workout_logs:new_workout' %}">Add new workout</a>
+  <h3><a href="{% url 'workout_logs:new_workout' %}">Add new workout</a></h3>
 
 {% endblock content %}  
