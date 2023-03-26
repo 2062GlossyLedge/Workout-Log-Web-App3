@@ -137,3 +137,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'users:login' #send user to log in screen if trying to access workouts while being logged out
+
+#Heroku settings 
+import django_heroku
+django_heroku.settings(locals())
