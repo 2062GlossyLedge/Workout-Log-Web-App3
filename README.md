@@ -2,4 +2,4 @@
 
 A web app in Django using Python and HTML that lets users make an account and  track their workouts. 
 
-This project comes from Python Crash Course by Eric Matthes 
+A similar project that helped me comes from Python Crash Course by Eric Matthes 
