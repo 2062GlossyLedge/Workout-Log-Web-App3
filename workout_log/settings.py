@@ -37,10 +37,10 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 #DEBUG = True
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-#ALLOWED_HOSTS = []
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+#DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 
 # Application definition
@@ -119,20 +119,40 @@ WSGI_APPLICATION = 'workout_log.wsgi.application'
 #     if os.getenv("DATABASE_URL", None) is None:
 #         raise Exception("DATABASE_URL environment variable not defined")
 #     DATABASES = {
-#         "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
+#         #"default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
+#          'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'URL': env('postgresql://postgres:fpRhFhG0hbRgTQjqgxvq@containers-us-west-91.railway.app:8001/railway'),
+#         'NAME': env('railway'),
+#         'USER': env('postgres'),
+#         'PASSWORD': env('fpRhFhG0hbRgTQjqgxvq'),
+#         'HOST': env('containers-us-west-91.railway.app'),
+#         'PORT': env('8001'),
+#     }
 #     }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'URL': os.getenv('postgresql://postgres:fpRhFhG0hbRgTQjqgxvq@containers-us-west-91.railway.app:8001/railway'),
-        'NAME': os.getenv('railway'),
-        'USER': os.getenv('postgres'),
-        'PASSWORD': os.getenv('fpRhFhG0hbRgTQjqgxvq'),
-        'HOST': os.getenv('containers-us-west-91.railway.app'),
-        'PORT': os.getenv('8001'),
+mode = os.environ.get('DJANGO_MODE', 'development')
+
+if mode == 'production': 
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'URL': os.getenv('postgresql://postgres:fpRhFhG0hbRgTQjqgxvq@containers-us-west-91.railway.app:8001/railway'),
+            'NAME': env('railway'),
+            'USER': env('postgres'),
+            'PASSWORD': env('fpRhFhG0hbRgTQjqgxvq'),
+            'HOST': env('containers-us-west-91.railway.app'),
+            'PORT': env('8001'),
+    }
+    }
+else:
+     DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
-}
+    }
 
 
 # Password validation
