@@ -107,10 +107,9 @@ WSGI_APPLICATION = 'workout_log.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
 }
-
 # if DEVELOPMENT_MODE is True:
 #     DATABASES = {
 #         "default": {
