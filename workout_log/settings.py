@@ -38,7 +38,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://web-production-9370.up.railway.app/', 'https://web-production-9370.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-9370.up.railway.app', 'https://web-production-9370.up.railway.app']
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 #ALLOWED_HOSTS = ['.vercel.app']
 
