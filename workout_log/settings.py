@@ -37,9 +37,9 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 #DEBUG = True
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
-#ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-ALLOWED_HOSTS = ['.vercel.app']
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+#ALLOWED_HOSTS = ['.vercel.app']
 
 #DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -102,12 +103,12 @@ WSGI_APPLICATION = 'workout_log.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # if DEVELOPMENT_MODE is True:
 #     DATABASES = {
@@ -132,28 +133,28 @@ WSGI_APPLICATION = 'workout_log.wsgi.application'
 #     }
 #     }
 
-mode = os.environ.get('DJANGO_MODE', 'development')
+# mode = os.environ.get('DJANGO_MODE', 'development')
 
-if mode == 'production': 
+# if mode == 'production': 
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'URL': os.getenv('postgresql://postgres:fpRhFhG0hbRgTQjqgxvq@containers-us-west-91.railway.app:8001/railway'),
-            'NAME': env('railway'),
-            'USER': env('postgres'),
-            'PASSWORD': env('fpRhFhG0hbRgTQjqgxvq'),
-            'HOST': env('containers-us-west-91.railway.app'),
-            'PORT': env('8001'),
-    }
-    }
-else:
-     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-        }
-    }
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'URL': os.getenv('postgresql://postgres:fpRhFhG0hbRgTQjqgxvq@containers-us-west-91.railway.app:8001/railway'),
+#             'NAME': env('railway'),
+#             'USER': env('postgres'),
+#             'PASSWORD': env('fpRhFhG0hbRgTQjqgxvq'),
+#             'HOST': env('containers-us-west-91.railway.app'),
+#             'PORT': env('8001'),
+#     }
+#     }
+# else:
+#      DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+#         }
+#     }
 
 
 # Password validation
@@ -207,3 +208,12 @@ LOGIN_URL = 'users:login' #send user to log in screen if trying to access workou
 # STATIC_URL = "/static/"
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATIC_URL = 'workout_log/workout_log/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "workout_logs\static")
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'

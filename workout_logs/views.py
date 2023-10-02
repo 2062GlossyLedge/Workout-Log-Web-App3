@@ -26,7 +26,7 @@ def workouts(request):
 def workout(request, workout_id):
     """Show a single workout, and all its entries."""
     workout = Workout.objects.get(id=workout_id)#, null=True)
-     # Make sure the topic belongs to the current user.
+     # Make sure the workout belongs to the current user.
     if workout.owner != request.user:
         raise Http404
     entries = workout.entry_set.order_by('-date_added')
