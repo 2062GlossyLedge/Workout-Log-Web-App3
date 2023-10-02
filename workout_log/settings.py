@@ -36,9 +36,9 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 #DEBUG = True
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['https://web-production-9370.up.railway.app']
+ALLOWED_HOSTS = ['*', 'https://web-production-9370.up.railway.app']
 CSRF_TRUSTED_ORIGINS = ['https://web-production-9370.up.railway.app', 'https://web-production-9370.up.railway.app']
-DEBUG_PROPAGATE_EXCEPTIONS = True
+#DEBUG_PROPAGATE_EXCEPTIONS = True
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 #ALLOWED_HOSTS = ['.vercel.app']
 
@@ -218,3 +218,17 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}
