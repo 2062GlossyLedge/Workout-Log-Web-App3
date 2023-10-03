@@ -1,5 +1,5 @@
 #Defines all the html templates that will be viewed as well as how the data will be structured by using queries 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Workout, Entry
 from .forms import WorkoutForm, EntryForm
@@ -25,7 +25,8 @@ def workouts(request):
 @login_required
 def workout(request, workout_id):
     """Show a single workout, and all its entries."""
-    workout = Workout.objects.get(id=workout_id)#, null=True)
+    #workout = Workout.objects.get(id=workout_id)#, null=True)
+    workout = get_object_or_404(Workout, id=workout_id)
      # Make sure the workout belongs to the current user.
     if workout.owner != request.user:
         raise Http404
