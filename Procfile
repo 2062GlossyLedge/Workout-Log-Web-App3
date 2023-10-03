@@ -1,1 +1,2 @@
-web: gunicorn workout_log.wsgi
+web: python manage.py migrate && python manage.py 
+collectstatic --no-input && gunicorn workout_log.wsgi

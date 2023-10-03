@@ -17,6 +17,9 @@ import sys
 import dj_database_url
 import psycopg2
 from environ import Env
+# Update database configuration from $DATABASE_URL environment variable (if defined)
+import dj_database_url
+
 
 env = Env()
 env.read_env()
@@ -33,8 +36,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 #DEBUG = os.getenv("DEBUG", "False") == "True"
+
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+
 
 ALLOWED_HOSTS = ['*', 'https://web-production-9370.up.railway.app']
 CSRF_TRUSTED_ORIGINS = ['https://web-production-9370.up.railway.app', 'https://web-production-9370.up.railway.app']
@@ -156,6 +162,12 @@ DATABASES = {
 #         }
 #     }
 
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=500,
+        conn_health_checks=True,
+    )
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -229,5 +241,14 @@ LOGGING = {
     'root': {
         'handlers': ['console'],
         'level': 'DEBUG',
+    },
+}
+
+# Static file serving.
+# https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
