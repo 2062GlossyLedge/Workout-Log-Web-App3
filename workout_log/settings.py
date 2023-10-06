@@ -14,12 +14,13 @@ from pathlib import Path
 import os
 from django.core.management.utils import get_random_secret_key
 import sys
-import dj_database_url
+#import dj_database_url
 import psycopg2
 from environ import Env
 # Update database configuration from $DATABASE_URL environment variable (if defined)
 import dj_database_url
 
+# DATABASE_URL = 
 
 env = Env()
 env.read_env()
@@ -110,11 +111,25 @@ WSGI_APPLICATION = 'workout_log.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+DATABASE_URL='postgresql://postgres:lma41uDvbWMnjqiAD0Om@containers-us-west-180.railway.app:7503/railway'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
+}
+
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=500,
+        conn_health_checks=True,
+    )
+
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+DATABASES = {
+    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=500),
 }
 # if DEVELOPMENT_MODE is True:
 #     DATABASES = {
@@ -162,11 +177,7 @@ DATABASES = {
 #         }
 #     }
 
-if 'DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=500,
-        conn_health_checks=True,
-    )
+
 
 
 # Password validation
