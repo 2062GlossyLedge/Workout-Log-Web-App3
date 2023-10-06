@@ -37,14 +37,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
+DEBUG = False
 #DEBUG = os.getenv("DEBUG", "False") == "True"
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+#DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 
-ALLOWED_HOSTS = ['*', 'https://web-production-9370.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['https://web-production-9370.up.railway.app', 'https://web-production-9370.up.railway.app']
+ALLOWED_HOSTS = ['*', 'https://workout-log.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://workout-log.up.railway.app', 'https://workout-log.up.railway.app']
 #DEBUG_PROPAGATE_EXCEPTIONS = True
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 #ALLOWED_HOSTS = ['.vercel.app']
