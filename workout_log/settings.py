@@ -43,8 +43,8 @@ DEBUG = False
 #DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 
-ALLOWED_HOSTS = ['https://workout-log.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['https://workout-log.up.railway.app', 'https://workout-log.up.railway.app']
+ALLOWED_HOSTS = ['workout-log.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://workout-log.up.railway.app']
 #DEBUG_PROPAGATE_EXCEPTIONS = True
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 #ALLOWED_HOSTS = ['.vercel.app']
